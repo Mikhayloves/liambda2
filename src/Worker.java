@@ -1,26 +1,32 @@
-import java.util.function.*;
-
 public class Worker {
     private OnTaskErrorListener errorCallback;
     private OnTaskDoneListener callback;
 
-    public Worker(OnTaskDoneListener callback, OnTaskErrorListener errorCallback) {
-        this.callback = callback;
+    public Worker(OnTaskErrorListener errorCallback, OnTaskDoneListener callback) {
         this.errorCallback = errorCallback;
+        this.callback = callback;
     }
 
-
     public void start() {
+        int count = 0;
         for (int i = 0; i < 100; i++) {
+            count++;
+            if (count == 33){
+              errorCallback.onError("Task " + i + " is done");
+            }
             callback.onDone("Task " + i + " is done");
         }
     }
-    //TODO: данный метод реализует именно ту задачу которая была поставлена
-    public void setErrorCallback() {
-        for (int i = 0; i < 34; i++) {
-            errorCallback.onError("Task " + i + " is done");
-        }
-        errorCallback.onError("Task " + "33 " + "is error");
+    @FunctionalInterface
+    public interface OnTaskDoneListener {
+        void onDone(String result);
+    }
+    @FunctionalInterface
+    public interface OnTaskErrorListener {
+        void onError(String result);
     }
 }
+
+
+
 
