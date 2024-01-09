@@ -11,19 +11,11 @@ public class Worker {
         int count = 0;
         for (int i = 0; i < 100; i++) {
             count++;
-            if (count == 33){
-              errorCallback.onError("Task " + i + " is done");
+            if (count == 34){
+              errorCallback.onError("Task " + i + " is error");
             }
             callback.onDone("Task " + i + " is done");
         }
-    }
-    @FunctionalInterface
-    public interface OnTaskDoneListener {
-        void onDone(String result);
-    }
-    @FunctionalInterface
-    public interface OnTaskErrorListener {
-        void onError(String result);
     }
 }
 
